@@ -1,9 +1,13 @@
 package com.example.monitoring.service;
 
 import io.micrometer.core.instrument.MeterRegistry;
+
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
+
+import io.micrometer.core.instrument.Tag;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -27,10 +31,13 @@ public class MetricsRecorder {
             String key = targetId + "|" + checkType;
             AtomicLong gauge = latencyGauges.computeIfAbsent(key, k -> {
                 AtomicLong holder = new AtomicLong();
-                meterRegistry.gauge("monitor_check_last_latency_ms",
-                        Map.of("target", targetId, "type", checkType),
+                meterRegistry.gauge(
+                        "monitor_check_last_latency_ms",
+                        List.of(Tag.of("target", targetId), Tag.of("type", checkType)),
                         holder,
-                        AtomicLong::get);
+                        AtomicLong::get
+                );
+
                 return holder;
             });
             gauge.set(latencyMs);
