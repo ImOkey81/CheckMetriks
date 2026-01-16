@@ -26,19 +26,3 @@ management:
 monitoring:
   poll-interval-ms: 15000
   request-timeout-ms: 3000
-  targets:
-    - id: "auth-service"
-      name: "Auth Service"
-      checks:
-        - type: "HTTP"
-          url: "http://localhost:9001/actuator/health"
-          expectStatus: 200
-          maxLatencyMs: 800
-          timeoutMs: 3000
-    - id: "redis-tcp"
-      name: "Redis TCP"
-      checks:
-        - type: "TCP"
-          host: "localhost"
-          port: 6379
-          connectTimeoutMs: 500

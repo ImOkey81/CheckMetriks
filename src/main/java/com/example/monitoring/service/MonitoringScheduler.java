@@ -1,6 +1,5 @@
 package com.example.monitoring.service;
 
-import com.example.monitoring.config.MonitoringProperties;
 import java.util.Map;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -8,19 +7,19 @@ import org.springframework.stereotype.Service;
 @Service
 public class MonitoringScheduler {
 
-    private final MonitoringProperties properties;
     private final CheckExecutor executor;
+    private final TargetRegistry targetRegistry;
 
-    public MonitoringScheduler(MonitoringProperties properties, CheckExecutor executor) {
-        this.properties = properties;
+    public MonitoringScheduler(CheckExecutor executor, TargetRegistry targetRegistry) {
         this.executor = executor;
+        this.targetRegistry = targetRegistry;
     }
 
     @Scheduled(fixedDelayString = "${monitoring.poll-interval-ms}")
     public void pollTargets() {
-        for (MonitoringProperties.TargetProperties target : properties.getTargets()) {
-            for (Map<String, Object> check : target.getChecks()) {
-                executor.execute(target.getId(), check);
+        for (TargetRegistry.MonitoringTarget target : targetRegistry.getTargets()) {
+            for (Map<String, Object> check : target.checks()) {
+                executor.execute(target.id(), check);
             }
         }
     }
