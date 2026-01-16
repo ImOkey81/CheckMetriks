@@ -2,9 +2,9 @@ package com.example.monitoring.config;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.NotBlank;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -25,7 +25,6 @@ public class MonitoringProperties {
     private Long requestTimeoutMs;
 
     @Valid
-    @NotEmpty
     private List<TargetProperties> targets = new ArrayList<>();
 
     public Long getPollIntervalMs() {
