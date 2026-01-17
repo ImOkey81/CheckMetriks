@@ -10,21 +10,10 @@ import java.util.Map;
 public class TargetRequest {
 
     @NotBlank
-    private String id;
-
-    @NotBlank
     private String name;
 
     @NotEmpty
     private List<Map<String, Object>> checks = new ArrayList<>();
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
 
     public String getName() {
         return name;

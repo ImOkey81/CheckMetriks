@@ -21,7 +21,6 @@ POST /api/targets
 curl -X POST "http://localhost:8080/api/targets" \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "billing-service",
     "name": "Billing Service",
     "checks": [
       {
@@ -40,7 +39,6 @@ curl -X POST "http://localhost:8080/api/targets" \
 curl -X POST "http://localhost:8080/api/targets" \
   -H "Content-Type: application/json" \
   -d '{
-    "id": "postgresql-tcp",
     "name": "PostgreSQL",
     "checks": [
       {
@@ -52,6 +50,8 @@ curl -X POST "http://localhost:8080/api/targets" \
     ]
   }'
 ```
+
+Сервис автоматически создаёт `targetId` и возвращает его в ответе на создание цели — используйте этот идентификатор для дальнейших запросов.
 
 ### 1) Получить последние результаты проверок по цели
 
@@ -124,7 +124,6 @@ curl "http://localhost:8080/api/targets/redis-tcp/failures?limit=10"
    - Body (raw JSON):
      ```json
      {
-       "id": "billing-service",
        "name": "Billing Service",
        "checks": [
          {
@@ -147,7 +146,7 @@ curl "http://localhost:8080/api/targets/redis-tcp/failures?limit=10"
 **Переменные окружения в Postman**
 ```text
 baseUrl = http://localhost:8080
-targetId = auth-service
+targetId = <id из ответа POST /api/targets>
 ```
 
 ## Полезные служебные эндпоинты (Spring Actuator)

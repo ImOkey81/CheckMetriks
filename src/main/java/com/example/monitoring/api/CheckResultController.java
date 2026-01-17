@@ -4,6 +4,7 @@ import com.example.monitoring.model.CheckResult;
 import com.example.monitoring.repository.CheckResultRepository;
 import com.example.monitoring.service.TargetRegistry;
 import java.util.List;
+import java.util.UUID;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,8 +31,9 @@ public class CheckResultController {
 
     @PostMapping
     public TargetRegistry.MonitoringTarget createTarget(@Valid @RequestBody TargetRequest request) {
+        String targetId = UUID.randomUUID().toString();
         TargetRegistry.MonitoringTarget target = new TargetRegistry.MonitoringTarget(
-                request.getId(),
+                targetId,
                 request.getName(),
                 request.getChecks()
         );
